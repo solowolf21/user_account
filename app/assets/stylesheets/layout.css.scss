@@ -1,0 +1,27 @@
+@import "colors";
+
+header#page-header {
+  padding: 1em;
+  text-align: center;
+  background: $appfolio-blue;
+  color: $light-silver;
+  border-bottom: 3px solid darken($appfolio-blue, 10%);
+
+  h1 {
+    font-style: italic;
+  }
+}
+
+footer#page-footer {
+  text-align: center;
+  padding: 5px;
+  background: $light-silver;
+  color: $appfolio-blue;
+  border-top: 3px solid darken($light-silver, 15%);
+}
+
+aside#page-sidebar {
+  float: right;
+  background: #F0F0F0;
+  width: 200px;
+}

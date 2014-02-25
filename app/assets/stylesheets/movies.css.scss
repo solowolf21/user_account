@@ -1,0 +1,56 @@
+@import "colors";
+
+article.movie {
+  img {
+    width: 90px;
+    height: 133px;
+    float: left;
+    margin: 0 15px;
+    border: 3px solid $appfolio-blue;
+  }
+}
+
+article.movie {
+  th {
+    float: left;
+    margin: 0 15px;
+  }
+
+  label {
+    font-weight: bolder;
+  }
+}
+
+.input {
+  label {
+    font-weight: bolder;
+    display: block;
+  }
+}
+
+.button {
+  font-weight: bolder;
+  background-color: lightcyan;
+}
+
+label.required {
+  abbr {
+    color: red;
+  }
+}
+
+.flash .notice {
+  border: 1px solid #d0e6d0;
+  padding: 1em;
+  font-size: 150%;
+  background-color: #e0f0e0;
+  color: #409040;
+}
+
+.flash .alert {
+  border: 1px solid #d0e6d0;
+  padding: 1em;
+  font-size: 150%;
+  background-color: #ffe8e0;
+  color: red;
+}

@@ -1,0 +1,5 @@
+log/
+tmp/
+.idea/
+.DS_Store
+app/.DS_Store

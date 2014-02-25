@@ -1,0 +1,14 @@
+<%= simple_form_for @movie do |f| %>
+    <%= f.input :title, :autofocus => true, :input_html => { :class => 'required'} %>
+    <%= f.input :description, :as => :text, :input_html => { :class => 'required', :rows => 10}  %>
+    <%= f.input :rating, :collection => Movie::RATINGS, :prompt => 'Pick one' %>
+    <%= f.input :released_on, :input_html => { :class => 'required'}  %>
+    <%= f.input :total_gross, :input_html => { :class => 'required'}  %>
+    <%= f.input :cast %>
+    <%= f.input :director %>
+    <%= f.input :duration, :input_html => { :class => 'required'}  %>
+    <%= f.input :image_file_name %>
+
+    <%= f.button :submit %> |
+    <%= link_to 'Cancel', movies_path %>
+<% end %>
