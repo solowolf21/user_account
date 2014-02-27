@@ -1,6 +1,5 @@
 class Movie < ActiveRecord::Base
   RATINGS = %w(G PG PG-13 R NC-17)
-  attr_accessible :rating, :title, :total_gross, :description, :released_on, :cast, :director, :duration, :image_file_name
 
   validates :title, :released_on, :duration, :presence => true
   validates :description, :length => {:minimum => 25}

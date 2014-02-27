@@ -1,0 +1,9 @@
+<%= simple_form_for @user do |f| %>
+  <%= f.input :name, :autofocus => true, :input_html => {:size => 30} %>
+  <%= f.input :email, :input_html => {:size => 30} %>
+  <%= f.input :password %>
+  <%= f.input :password_confirmation, :label => 'Confirm Password' %>
+
+  <%= f.button :submit %> |
+  <%= link_to 'Cancel', root_url %>
+<% end %>
