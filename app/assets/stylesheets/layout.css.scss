@@ -24,4 +24,23 @@ aside#page-sidebar {
   float: right;
   background: #F0F0F0;
   width: 200px;
+  border-radius: 5px;
+}
+
+.main-panel {
+  padding-left: 2em;
+  padding-bottom: 2em;
+  padding-top: 0.5em;
+  margin: 2em 2em;
+  border-radius: 5px;
+  background-color: lightgrey;
+  .form-panel {
+    width: 23%;
+    background-color: #d6e6e6;
+    border-radius: 5px;
+    padding: 10px 10px;
+    input.string {
+      width: 20em;
+    }
+  }
 }
