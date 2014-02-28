@@ -33,7 +33,7 @@ aside#page-sidebar {
   padding-top: 0.5em;
   margin: 2em 2em;
   border-radius: 5px;
-  background-color: lightgrey;
+  background-color: lightblue;
   .form-panel {
     width: 23%;
     background-color: #d6e6e6;
@@ -42,5 +42,24 @@ aside#page-sidebar {
     input.string {
       width: 20em;
     }
+  }
+}
+
+.flash {
+  padding: 0.5em;
+  font-size: 150%;
+
+  .notice {
+    border-radius: 5px;
+    padding: 0.5em;
+    background-color: #e0f0e0;
+    color: #409040;
+  }
+
+  .alert {
+    border-radius: 5px;
+    padding: 0.5em;
+    background-color: #ffe8e0;
+    color: red;
   }
 }
