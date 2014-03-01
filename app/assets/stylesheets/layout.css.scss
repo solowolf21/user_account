@@ -1,14 +1,20 @@
 @import "colors";
 
-header#page-header {
+.page-header {
   padding: 1em;
-  text-align: center;
   background: $appfolio-blue;
   color: $light-silver;
   border-bottom: 3px solid darken($appfolio-blue, 10%);
+  width: 100%;
 
-  h1 {
+  .title-part {
+    text-align: center;
+    width: 90%;
     font-style: italic;
+  }
+
+  .session-info {
+    width: 10%;
   }
 }
 
@@ -20,28 +26,31 @@ footer#page-footer {
   border-top: 3px solid darken($light-silver, 15%);
 }
 
-aside#page-sidebar {
-  float: right;
-  background: #F0F0F0;
-  width: 200px;
-  border-radius: 5px;
-}
-
-.main-panel {
-  padding-left: 2em;
-  padding-bottom: 2em;
-  padding-top: 0.5em;
-  margin: 2em 2em;
-  border-radius: 5px;
-  background-color: lightblue;
-  .form-panel {
-    width: 23%;
-    background-color: #d6e6e6;
+.big-panel {
+  width: 100%;
+  .main-panel {
+    padding-left: 2em;
+    padding-bottom: 2em;
+    margin: 2em 2em;
     border-radius: 5px;
-    padding: 10px 10px;
-    input.string {
-      width: 20em;
+    background-color: lightblue;
+    width: 80%;
+    .form-panel {
+      width: 23%;
+      background-color: #d6e6e6;
+      border-radius: 5px;
+      padding: 10px 10px;
+      input.string {
+        width: 20em;
+      }
     }
+  }
+
+  .page-sidebar {
+    vertical-align: text-top;
+    background: #F0F0F0;
+    width: 20%;
+    border-radius: 5px;
   }
 }
 
