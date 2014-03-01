@@ -22,7 +22,7 @@ class ReviewTest < ActiveSupport::TestCase
 
   def test_validations
     review = Review.new
-    assert !review.valid?
+    assert_not review.valid?
     assert_no_difference ('Review.count') do
       review.save
     end

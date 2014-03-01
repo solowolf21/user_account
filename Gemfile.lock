@@ -110,6 +110,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0)
   jquery-rails
   json
+  minitest
   mocha
   mysql2
   rails (~> 4.0)
