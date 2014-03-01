@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(users_params)
     if @user.save
+      session[:user_id] = @user.id
       flash[:notice] = "A new user was successfully created."
       redirect_to @user
     else
