@@ -5,7 +5,7 @@
     </td>
     <td class='session-info'>
       <nav>
-        <% if @current_user ||= find_current_user(session[:user_id]) %>
+        <% if @current_user ||= find_current_user %>
           <%= link_to @current_user.name, @current_user %> |
           <%= link_to 'Sign Out', session_path, :method => :delete %>
         <% else %>
