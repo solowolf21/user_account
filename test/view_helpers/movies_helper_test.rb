@@ -38,7 +38,7 @@ class MoviesHelperTest < ActionView::TestCase
   end
 
   def test_format_total_gross
-    assert_equal '$1,234,124,312,349.00', view.format_total_gross(@movie_1)
+    assert_equal '$318,412,101.00', view.format_total_gross(@movie_1)
     assert_equal '<strong>Flop!</strong>', view.format_total_gross(@movie_3)
   end
 
