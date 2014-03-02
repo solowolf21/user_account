@@ -4,8 +4,8 @@ class MovieTest < ActiveSupport::TestCase
   def test_flop
     movie = Movie.create_exemplar!(:total_gross => 1)
     assert movie.flop?
-    movie.update_attributes!(:total_gross => 99999999999)
-    assert !movie.flop?
+    movie.update_attributes!(:total_gross => 50000001)
+    assert_not movie.flop?
   end
 
   def test_setter_getter
@@ -49,7 +49,7 @@ class MovieTest < ActiveSupport::TestCase
   def test_validations
     movie = Movie.new
 
-    assert !movie.valid?
+    assert_not movie.valid?
     assert_no_difference ('Movie.count') do
       movie.save
     end
@@ -67,7 +67,7 @@ class MovieTest < ActiveSupport::TestCase
     movie.total_gross = -2
     movie.rating = 'PG-13'
 
-    assert !movie.valid?
+    assert_not movie.valid?
     assert_no_difference ('Movie.count') do
       movie.save
     end

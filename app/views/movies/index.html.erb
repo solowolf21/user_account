@@ -8,11 +8,11 @@
           <h1><%= link_to movie.title, movie %></h1>
 
           <h3><%= movie.cast %></h3>
-          <p><%= truncate(movie.description, :length => 40, :seprator => ' ') %></p>
+          <p><%= truncate(movie.description, :length => 40, :separator => ' ') %></p>
         </header>
         <table>
           <tr>
-            <th>Realsed:</th>
+            <th>Released:</th>
             <td><%= movie.released_on.to_s + ' (' + time_ago_in_words(movie.released_on) +')' %></td>
           </tr>
           <tr>

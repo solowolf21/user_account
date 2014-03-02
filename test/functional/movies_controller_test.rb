@@ -93,6 +93,7 @@ class MoviesControllerTest < ActionController::TestCase
   def test_update
     assert_no_difference ('Movie.count') do
       put :update, params.merge(:id => @movie_1.id)
+      assert_redirected_to @movie_1
     end
 
     @movie_1.reload
