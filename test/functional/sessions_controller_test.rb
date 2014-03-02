@@ -15,4 +15,13 @@ class SessionsControllerTest < ActionController::TestCase
     assert_equal 'Invalid email/password combination.', flash[:alert]
     assert_template :new
   end
+
+  def test_destroy
+    session[:user_id] = 1
+    assert_not_nil session[:user_id]
+    delete :destroy
+    assert_nil session[:user_id]
+    assert_equal 'You have been successfully signed out!', flash[:notice]
+    assert_redirected_to root_url
+  end
 end
