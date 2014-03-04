@@ -22,8 +22,9 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal 'A new user was successfully created.', flash[:notice]
   end
 
-  def test_index
+  def test_index__with_sign_in
     setup_users
+    session[:user_id] = @user_1.id
     get :index
     assert_response :success
 
@@ -33,15 +34,31 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal @user_3, assigns(:users)[2]
   end
 
-  def test_show
-    @user = User.create_exemplar!
+  def test_index__without_sign_in
+    setup_users
+    get :index
+    assert_equal 'Please Sign In First!', flash[:alert]
+    assert_redirected_to new_session_path
+  end
+
+  def test_show__with_sign_in
+    @user             = User.create_exemplar!
+    session[:user_id] = @user.id
     get :show, :id => @user.id
     assert_response :success
     assert_equal @user, assigns(:user)
   end
 
-  def test_update
+  def test_show__without_sign_in
     @user = User.create_exemplar!
+    get :show, :id => @user.id
+    assert_equal 'Please Sign In First!', flash[:alert]
+    assert_redirected_to new_session_path
+  end
+
+  def test_update__with_sign_in__with_corrent_user
+    @user             = User.create_exemplar!
+    session[:user_id] = @user.id
     assert_equal 'User', @user.name
     assert_equal 'user@user.com', @user.email
     assert_equal 'secret', @user.password
@@ -55,13 +72,38 @@ class UsersControllerTest < ActionController::TestCase
     @user.reload
     assert_equal 'kevin', @user.name
     assert_equal 'kevin@user.com', @user.email
-    #TODO figure out why password is not successfully reloaded
-    #assert_equal 'kevin_secret', @user.password
     assert User.authenticate(@user.email, 'kevin_secret')
   end
 
-  def test_destroy
+  def test_update__with_sign_in__without_corrent_user
     setup_users
+    session[:user_id] = @user_2.id
+    assert_equal 'Jim', @user_1.name
+    assert_equal 'jim@user.com', @user_1.email
+    assert_equal 'jim_secret', @user_1.password
+
+    assert_no_difference ('User.count') do
+      put :update, params.merge(:id => @user_1.id)
+      assert_redirected_to root_url
+    end
+  end
+
+  def test_update__without_sign_in
+    @user = User.create_exemplar!
+    assert_equal 'User', @user.name
+    assert_equal 'user@user.com', @user.email
+    assert_equal 'secret', @user.password
+
+    assert_no_difference ('User.count') do
+      put :update, params.merge(:id => @user.id)
+      assert_equal 'Please Sign In First!', flash[:alert]
+      assert_redirected_to new_session_path
+    end
+  end
+
+  def test_destroy__with_sign_in__with_corrent_user
+    setup_users
+    session[:user_id] = @user_1.id
     assert_difference ('User.count'), -1 do
       delete :destroy, :id => @user_1.id
     end
@@ -71,10 +113,28 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal 'User successfully destroyed!', flash[:alert]
   end
 
+  def test_destroy__with_sign_in__without_corrent_user
+    setup_users
+    session[:user_id] = @user_2.id
+    assert_no_difference 'User.count' do
+      delete :destroy, :id => @user_1.id
+      assert_redirected_to root_url
+    end
+  end
+
+  def test_destroy__without_sign_in
+    setup_users
+    assert_no_difference 'User.count' do
+      delete :destroy, :id => @user_1.id
+      assert_equal 'Please Sign In First!', flash[:alert]
+      assert_redirected_to new_session_path
+    end
+  end
+
   private
   def setup_users
     @user_1 = User.create_exemplar!(
-        :name     => 'Tim',
+        :name     => 'Jim',
         :email    => 'jim@user.com',
         :password => 'jim_secret'
     )
