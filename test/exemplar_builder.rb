@@ -30,12 +30,6 @@ module ExemplarBuilder
         end
       end
 
-      # (class << klass; self; end).class_eval do
-      #   define_method("#{namespace}create_#{method}_exemplar!") do |*params|
-      #     send( exemplar_method, *params ).tap {|e| e.save! }.send("#{method}_exemplar".to_sym)
-      #   end
-      # end
-
     else
       (class << klass; self; end).class_eval do
         define_method( exemplar_method ) do |*params|
@@ -47,7 +41,7 @@ module ExemplarBuilder
 
           klass.new.tap do |new_exemplar|
             block.call(new_exemplar, exemplar_count, overrides) if block
-            new_exemplar.assign_attributes(overrides, :without_protection => true)
+            new_exemplar.assign_attributes(overrides)
           end
         end
 

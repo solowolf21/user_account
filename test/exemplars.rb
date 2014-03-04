@@ -12,10 +12,17 @@ class Exemplars
   end
 
   exemplify Review do |obj, count, overrides|
-    obj.name = "Reviewer#{count}Nmane"
+    obj.name = "Reviewer#{count}Name"
     obj.stars = overrides.delete(:stars) || [1, 2, 3, 4, 5].sample
     obj.comment = "It's pretty good."
     obj.movie = overrides.delete(:movie) || Movie.create_exemplar!
+  end
+
+  exemplify User do |obj, count, overrides|
+    obj.name = overrides.delete(:name) || "User#{count}"
+    obj.email = overrides.delete(:email) || "#{obj.name.dup.downcase}@user.com"
+    obj.password = overrides.delete(:password) || 'secret'
+    obj.password_confirmation = obj.password
   end
 
 end

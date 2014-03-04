@@ -1,0 +1,10 @@
+<h1><%= pluralize(@users.size, 'User') %></h1>
+
+<% @users.each do |user| %>
+    <p>
+      <article class="movie">
+          <h1><%= link_to user.name, user %></h1>
+          <h3><%= user.email %></h3>
+      </article>
+    </p>
+<% end %>

@@ -1,3 +1,17 @@
-<header id="page-header">
-  <h1>AppFolio Movies</h1>
-</header>
+<table class="page-header">
+  <tr>
+    <td class="title-part">
+      <h1>AppFolio Movies</h1>
+    </td>
+    <td class='session-info'>
+      <nav>
+        <% if @current_user ||= find_current_user(session[:user_id]) %>
+          <li><%= link_to @current_user.name, @current_user %></li>
+        <% else %>
+          <li><%= link_to 'Sign Up', signup_path %></li>
+          <li><%= link_to 'Sign In', new_session_path %></li>
+        <% end %>
+      </nav>
+    </td>
+  </tr>
+</table>
