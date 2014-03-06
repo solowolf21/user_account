@@ -12,10 +12,10 @@ class Exemplars
   end
 
   exemplify Review do |obj, count, overrides|
-    obj.name = "Reviewer#{count}Name"
     obj.stars = overrides.delete(:stars) || [1, 2, 3, 4, 5].sample
     obj.comment = "It's pretty good."
     obj.movie = overrides.delete(:movie) || Movie.create_exemplar!
+    obj.user = overrides.delete(:user) || User.create_exemplar!
   end
 
   exemplify User do |obj, count, overrides|

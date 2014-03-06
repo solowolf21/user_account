@@ -13,3 +13,17 @@ two:
   email: kim@user.com
   password_digest: <%= BCrypt::Password.create('secret') %>
   admin: false
+
+three:
+  id: 3
+  name: Jim
+  email: jim@user.com
+  password_digest: <%= BCrypt::Password.create('secret') %>
+  admin: false
+
+four:
+  id: 4
+  name: Tim
+  email: tim@user.com
+  password_digest: <%= BCrypt::Password.create('secret') %>
+  admin: false
