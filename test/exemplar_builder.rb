@@ -24,7 +24,7 @@ module ExemplarBuilder
           self.tap do |new_exemplar|
             exemplar_count = Rails.cache.increment(count_var_name, 1, :namespace => "af_rails_exemplars")
             block.call(new_exemplar, exemplar_count, overrides) if block
-            new_exemplar.assign_attributes(overrides, :without_protection => true)
+            new_exemplar.assign_attributes(overrides)
             save! unless new_record?
           end
         end

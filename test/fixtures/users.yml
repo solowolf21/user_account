@@ -5,9 +5,11 @@ one:
   name: Sen
   email: sen@user.com
   password_digest: <%= BCrypt::Password.create('secret') %>
+  admin: true
 
 two:
   id: 2
   name: Kim
   email: kim@user.com
   password_digest: <%= BCrypt::Password.create('secret') %>
+  admin: false

@@ -41,6 +41,8 @@
     </tr>
   </table>
 
-  <%= link_to 'Edit', edit_movie_path(@movie) %> |
-  <%= link_to 'Delete', @movie, :method => :delete, :data => {:confirm => 'Are you sure?'} %>
+  <% if current_user_admin? %>
+    <%= link_to 'Edit', edit_movie_path(@movie) %> |
+    <%= link_to 'Delete', @movie, :method => :delete, :data => {:confirm => 'Are you sure?'} %>
+  <% end %>
 </article>

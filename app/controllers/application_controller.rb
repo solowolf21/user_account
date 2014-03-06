@@ -18,5 +18,16 @@ private
     find_current_user == user
   end
 
-  helper_method :find_current_user, :current_user?
+  def current_user_admin?
+    find_current_user && find_current_user.admin?
+  end
+
+  def require_admin
+    unless current_user_admin?
+      flash[:alert] = 'You are not authorized!'
+      redirect_to root_url
+    end
+  end
+
+  helper_method :find_current_user, :current_user?, :current_user_admin?
 end

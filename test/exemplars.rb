@@ -23,6 +23,10 @@ class Exemplars
     obj.email = overrides.delete(:email) || "#{obj.name.dup.downcase}@user.com"
     obj.password = overrides.delete(:password) || 'secret'
     obj.password_confirmation = obj.password
+    obj.admin =  overrides.delete(:admin) || false
   end
 
+  exemplify User, :admin do |obj, count, overrides|
+    obj.admin = true
+  end
 end
