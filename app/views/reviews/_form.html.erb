@@ -1,8 +1,7 @@
 <div class="form-panel">
   <%= simple_form_for @review, :url => movie_reviews_path(@movie), :method => :post do |f| %>
     <%= render 'shared/errors', :object => @review %>
-    <%= f.input :name, :autofocus => true %>
-    <%= f.input :stars, :as => :select, :collection => Review::STARS, :default => 1 %>
+    <%= f.input :stars, :as => :select, :collection => Review::STARS, :default => 1, :autofocus => true %>
     <%= f.input :comment, :as => :text, :input_html => {:cols => 29, :rows => 5} %>
 
     <%= f.button :submit, :value => 'Submit' %> |

@@ -5,7 +5,6 @@ class ReviewTest < ActiveSupport::TestCase
     review = Review.create_exemplar!
     movie = Movie.create_exemplar!
 
-    review.name = 'Jim'
     review.stars = 5
     review.comment = 'What a good movie!'
     review.movie = movie
@@ -14,7 +13,6 @@ class ReviewTest < ActiveSupport::TestCase
 
     review.reload
 
-    assert_equal 'Jim', review.name
     assert_equal 5, review.stars
     assert_equal 'What a good movie!', review.comment
     assert_equal movie, review.movie
