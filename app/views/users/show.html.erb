@@ -1,19 +1,26 @@
 <article class="movie">
   <h2><%= @user.name %></h2>
   <h3><%= @user.email %></h3>
-  <% if current_user?(@user) %>
+  <% if current_user?(@user) || find_current_user.admin? %>
     <%= link_to 'Edit', edit_user_path(@user) %> |
     <%= link_to 'Delete', @user, :method => :delete, :data => {:confirm => 'Are you sure?'} %>
   <% end %>
-  <hr>
   <% if @user.reviews.any? %>
-    <h3>Reviews</h3>
+    <hr>
+    <strong>Reviews</strong>
     <% @user.reviews.each do |review| %>
       <li>
         <span><%= pluralize(review.stars, 'star') %></span>
         <span>for <%= link_to review.movie.title, review.movie %></span>
         <span>&#40;<%= time_ago_in_words(review.created_at) %> ago&#41;</span>
       </li>
+    <% end %>
+  <% end %>
+  <% if @liked_movies.any? %>
+    <hr>
+    <strong>Liked Movies</strong>
+    <% @liked_movies.each do |movie| %>
+      <li><%= link_to movie.title, movie %></li>
     <% end %>
   <% end %>
 </article>

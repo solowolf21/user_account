@@ -35,14 +35,24 @@
       <th>Duration:</th>
       <td><%= @movie.duration %></td>
     </tr>
-    <tr>
-      <td><%= link_to pluralize(@movie.reviews.size, 'review'),  movie_reviews_path(@movie)%></td>
-      <td><%= link_to 'Write a Review', new_movie_review_path(@movie) %></td>
-    </tr>
   </table>
+  <div style="margin-left: 15px">
+    <% if current_user_admin? %>
+      <%= link_to 'Edit', edit_movie_path(@movie) %> |
+      <%= link_to 'Delete', @movie, :method => :delete, :data => {:confirm => 'Are you sure?'} %>
+    <% end %>
 
-  <% if current_user_admin? %>
-    <%= link_to 'Edit', edit_movie_path(@movie) %> |
-    <%= link_to 'Delete', @movie, :method => :delete, :data => {:confirm => 'Are you sure?'} %>
-  <% end %>
+    <hr>
+    <span><%= link_to pluralize(@movie.reviews.size, 'review'), movie_reviews_path(@movie) %></span>&nbsp;
+    <span><%= link_to 'Write a Review', new_movie_review_path(@movie) %></span>
+    <hr>
+
+    <h3><%= pluralize(@likers.size, 'like') %></h3>
+    <% if @likers.any? %>
+      <strong>Likers</strong>
+      <% @likers.each do |liker| %>
+        <li><%= link_to liker.name, liker %></li>
+      <% end %>
+    <% end %>
+  </div>
 </article>
