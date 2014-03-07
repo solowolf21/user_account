@@ -57,7 +57,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   def test_update__with_sign_in__with_corrent_user
-    @user             = User.create_exemplar!
+    @user             = User.create_exemplar!(:name => 'User')
     session[:user_id] = @user.id
     assert_equal 'User', @user.name
     assert_equal 'user@user.com', @user.email
@@ -89,7 +89,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   def test_update__without_sign_in
-    @user = User.create_exemplar!
+    @user = User.create_exemplar!(:name => 'User')
     assert_equal 'User', @user.name
     assert_equal 'user@user.com', @user.email
     assert_equal 'secret', @user.password

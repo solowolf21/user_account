@@ -25,11 +25,9 @@ class ReviewTest < ActiveSupport::TestCase
       review.save
     end
 
-    assert_equal ["can't be blank"], review.errors[:name]
     assert_equal ["can't be blank", "must be between 1 and 5"], review.errors[:stars]
     assert_equal ["can't be blank", "is too short (minimum is 4 characters)"], review.errors[:comment]
 
-    review.name = 'Jim'
     review.stars = 5
     review.comment = 'What a good movie!'
     review.movie = Movie.create_exemplar!
