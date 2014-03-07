@@ -11,6 +11,8 @@ class Movie < ActiveRecord::Base
   validates :rating, :inclusion => { :in => RATINGS, :message=> 'is not a valid rating'}
 
   has_many :reviews, :dependent => :destroy
+  has_many :likes, :dependent => :destroy
+  has_many :likers, :through => :likes, :source => :user
 
   def flop?
     self.total_gross < 50000000

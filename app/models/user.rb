@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   has_secure_password
 
   has_many :reviews, :dependent => :destroy
+  has_many :likes, :dependent => :destroy
+  has_many :liked_movies, :through => :likes, :source => :movie
 
   validates :name,  :presence => true
   validates :email, :presence => true,
