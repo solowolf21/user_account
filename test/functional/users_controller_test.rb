@@ -49,6 +49,15 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal @user, assigns(:user)
   end
 
+  def test_show__with_sign_in_and_liked_movies
+    @user             = User.create_exemplar!.with_liked_movies_exemplar
+    session[:user_id] = @user.id
+    get :show, :id => @user.id
+    assert_response :success
+    assert_equal @user, assigns(:user)
+    assert_equal 3, assigns(:liked_movies).size
+  end
+
   def test_show__without_sign_in
     @user = User.create_exemplar!
     get :show, :id => @user.id
@@ -57,7 +66,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   def test_update__with_sign_in__with_corrent_user
-    @user             = User.create_exemplar!
+    @user             = User.create_exemplar!(:name => 'User')
     session[:user_id] = @user.id
     assert_equal 'User', @user.name
     assert_equal 'user@user.com', @user.email
@@ -89,7 +98,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   def test_update__without_sign_in
-    @user = User.create_exemplar!
+    @user = User.create_exemplar!(:name => 'User')
     assert_equal 'User', @user.name
     assert_equal 'user@user.com', @user.email
     assert_equal 'secret', @user.password

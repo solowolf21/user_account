@@ -49,4 +49,10 @@ class UserTest < ActiveSupport::TestCase
 
     assert User.authenticate('paul@user.com', 'secret_pwd')
   end
+
+  def test_like
+    @user = User.create_exemplar!.with_liked_movies_exemplar
+    assert_equal 3, @user.likes.size
+    assert_equal 3, @user.liked_movies.size
+  end
 end
