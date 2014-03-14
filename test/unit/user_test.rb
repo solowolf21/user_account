@@ -7,12 +7,14 @@ class UserTest < ActiveSupport::TestCase
     @user.email                 = 'jim@user.com'
     @user.password              = 'secret'
     @user.password_confirmation = 'secret'
+    @user.admin                 = true
 
     @user.save!
     @user.reload
 
     assert_equal 'Jim', @user.name
     assert_equal 'jim@user.com', @user.email
+    assert @user.admin?
     assert User.authenticate('jim@user.com', 'secret')
   end
 
