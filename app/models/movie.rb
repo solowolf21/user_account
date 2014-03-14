@@ -13,6 +13,8 @@ class Movie < ActiveRecord::Base
   has_many :reviews, :dependent => :destroy
   has_many :likes, :dependent => :destroy
   has_many :likers, :through => :likes, :source => :user
+  has_many :characterizations, :dependent => :destroy
+  has_many :genres, :through => :characterizations
 
   def flop?
     self.total_gross < 50000000

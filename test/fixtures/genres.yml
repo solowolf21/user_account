@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  name: Action
+
+two:
+  id: 2
+  name: Comedy
+
+three:
+  id: 3
+  name: Drama
+
+four:
+  id: 4
+  name: Romance
+
+five:
+  id: 5
+  name: Thriller
+
+six:
+  id: 6
+  name: Fantasy
+
+seven:
+  id: 7
+  name: Documentary
+
+eight:
+  id: 8
+  name: Adventure
+
+nine:
+  id: 9
+  name: Animation
+
+ten:
+  id: 10
+  name: Sci
