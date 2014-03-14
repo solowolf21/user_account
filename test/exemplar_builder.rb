@@ -1,6 +1,8 @@
 module ExemplarBuilder
 
   def exemplify(klass, *args, &block)
+    @@counter_hash ||= {}
+
     options = {}
     if ! args.first.is_a? Hash
       options[:method] = args.first
@@ -22,7 +24,8 @@ module ExemplarBuilder
           overrides ||= {}
 
           self.tap do |new_exemplar|
-            exemplar_count = Rails.cache.increment(count_var_name, 1, :namespace => "af_rails_exemplars")
+            @@counter_hash[klass] ||= 0
+            exemplar_count = "#{$$}#{@@counter_hash[klass] += 1}".to_i
             block.call(new_exemplar, exemplar_count, overrides) if block
             new_exemplar.assign_attributes(overrides)
             save! unless new_record?
@@ -35,8 +38,8 @@ module ExemplarBuilder
         define_method( exemplar_method ) do |*params|
           overrides = params.first
           overrides ||= {}
-
-          exemplar_count = Rails.cache.increment(count_var_name, 1, :namespace => "af_rails_exemplars")
+          @@counter_hash[klass] ||= 0
+          exemplar_count = "#{$$}#{@@counter_hash[klass] += 1}".to_i
           Rails.logger.info("exemplar_builder: #{count_var_name} #{exemplar_count}")
 
           klass.new.tap do |new_exemplar|
