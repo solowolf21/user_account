@@ -73,6 +73,14 @@ class MoviesControllerTest < ActionController::TestCase
     assert_equal @movie_1, assigns(:movie)
   end
 
+  def test_show__with_likers
+    @movie = Movie.create_exemplar!.with_likers_exemplar
+    get :show, :id => @movie.id
+    assert_response :success
+    assert_equal @movie, assigns(:movie)
+    assert_equal 3, assigns(:likers).size
+  end
+
   def test_edit__without_signed_in
     assert_no_difference ('Movie.count') do
       get :edit, :id => @movie_1.id
