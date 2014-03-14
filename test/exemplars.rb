@@ -9,6 +9,7 @@ class Exemplars
     obj.description = "#{obj.title} is really really good. " * 4
     obj.total_gross = rand(100000000)
     obj.duration = ['90min', '95min', '100min', '115min', '120min', '150min'].sample
+    obj.likers = overrides.delete(:likers) || []
   end
 
   exemplify Movie, :with_likers do |obj, count, overrides|
@@ -30,6 +31,7 @@ class Exemplars
     obj.password = overrides.delete(:password) || 'secret'
     obj.password_confirmation = obj.password
     obj.admin =  overrides.delete(:admin) || false
+    obj.liked_movies = overrides.delete(:liked_movies) || []
   end
 
   exemplify User, :admin do |obj, count, overrides|
