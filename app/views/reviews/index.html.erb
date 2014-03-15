@@ -5,7 +5,7 @@
 <ol>
   <% @reviews.each do |review| %>
       <span><%= pluralize(review.stars, 'star') %></span>
-      <span>by <%= review.name %></span>
+      <span>by <%= link_to review.user.name, review.user %></span>
       <span>&#40;<%= time_ago_in_words(review.created_at) %> ago&#41;</span>
       <p>
         &quot;<%= review.comment %>&quot;

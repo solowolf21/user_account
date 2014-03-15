@@ -9,6 +9,7 @@
     <%= f.input :director %>
     <%= f.input :duration %>
     <%= f.input :image_file_name %>
+    <%= f.association :genres, :as => :check_boxes, :collection => Genre.all.order(:name), :label => 'Genres' %>
 
     <%= f.button :submit %> |
     <%= link_to 'Cancel', movies_path %>
