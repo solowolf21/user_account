@@ -36,16 +36,49 @@ footer#page-footer {
     background-color: lightblue;
     width: 80%;
     .form-panel {
-      width: 23%;
+      width: 30%;
       background-color: #d6e6e6;
       border-radius: 5px;
       padding: 10px 10px;
-      input.string {
-        width: 20em;
-      }
     }
   }
 
+  .input .string > label {
+    font-size: larger;
+  }
+
+  .input {
+    padding: 7px;
+    .string {
+      width: 25em;
+      height: 2em;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    .text {
+      width: 25em;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    .select {
+      width: 10em;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    .text, .integer {
+      width: 25em;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    .date {
+      font-size: 16px;
+      border-radius: 5px;
+    }
+  }
   .page-sidebar {
     vertical-align: text-top;
     background: #F0F0F0;
