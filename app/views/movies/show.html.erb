@@ -36,13 +36,41 @@
       <td><%= @movie.duration %></td>
     </tr>
     <tr>
-      <td><%= link_to pluralize(@movie.reviews.size, 'review'),  movie_reviews_path(@movie)%></td>
-      <td><%= link_to 'Write a Review', new_movie_review_path(@movie) %></td>
+      <th>Genres:</th>
+      <td>
+        <% @genres.each do |g| %>
+        <li><%= g.name %></li>
+        <% end %>
+      </td>
     </tr>
   </table>
+  <div style="margin-left: 15px">
+    <% if current_user_admin? %>
+      <%= link_to 'Edit', edit_movie_path(@movie) %> |
+      <%= link_to 'Delete', @movie, :method => :delete, :data => {:confirm => 'Are you sure?'} %>
+    <% end %>
 
-  <% if current_user_admin? %>
-    <%= link_to 'Edit', edit_movie_path(@movie) %> |
-    <%= link_to 'Delete', @movie, :method => :delete, :data => {:confirm => 'Are you sure?'} %>
-  <% end %>
+    <hr>
+    <span><%= link_to pluralize(@movie.reviews.size, 'review'), movie_reviews_path(@movie) %></span>&nbsp;
+    <span><%= link_to 'Write a Review', new_movie_review_path(@movie) %></span>
+    <hr>
+
+    <strong style="font-size: 120%"><%= pluralize(@likers.size, 'like') %></strong>
+
+    <div style="margin: 10px 0">
+      <% if find_current_user %>
+        <% if @current_like %>
+          <%= button_to 'Unlike', movie_like_path(@movie, @current_like), :method => :delete, :style => 'width:60px;font-size:120%' %>
+        <% else %>
+          <%= button_to 'Like', movie_likes_path(@movie), :style => 'width:60px;font-size:120%' %>
+        <% end %>
+      <% end %>
+    </div>
+    <% if @likers.any? %>
+      <strong>Likers</strong>
+      <% @likers.each do |liker| %>
+        <li><%= link_to liker.name, liker %></li>
+      <% end %>
+    <% end %>
+  </div>
 </article>
