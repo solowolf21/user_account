@@ -8,6 +8,13 @@ class MovieTest < ActiveSupport::TestCase
     assert_not movie.flop?
   end
 
+  def test_hit
+    movie = Movie.create_exemplar!(:total_gross => 1)
+    assert_not movie.hit?
+    movie.update_attributes!(:total_gross => 300000000)
+    assert movie.hit?
+  end
+
   def test_setter_getter
     movie = Movie.create_exemplar!
     movie.title           = 'Flix'
@@ -31,19 +38,6 @@ class MovieTest < ActiveSupport::TestCase
     assert_equal 'Mike Bay',           movie.director
     assert_equal '2h30min',            movie.duration
     assert_equal 'transformer.jpg',    movie.image_file_name
-  end
-
-  def test_released
-    movie_1 = Movie.create_exemplar!(:released_on => Date.today << 12)
-    movie_2 = Movie.create_exemplar!(:released_on => Date.today >> 5)
-    movie_3 = Movie.create_exemplar!(:released_on => Date.today << 9)
-    movie_4 = Movie.create_exemplar!(:released_on => Date.today << 22)
-
-    movies = Movie.released
-    assert_equal 3, movies.size
-    assert_equal movie_3, movies[0]
-    assert_equal movie_1, movies[1]
-    assert_equal movie_4, movies[2]
   end
 
   def test_validations
@@ -102,5 +96,85 @@ class MovieTest < ActiveSupport::TestCase
     @movie = Movie.create_exemplar!.with_likers_exemplar
     assert_equal 3, @movie.likes.size
     assert_equal 3, @movie.likers.size
+  end
+
+  def test_scope_released
+    setup_movies
+
+    movies = Movie.released
+    assert_equal 6, movies.size
+    assert_equal @movie_3, movies[0]
+    assert_equal @movie_6, movies[1]
+    assert_equal @movie_2, movies[2]
+    assert_equal @movie_1, movies[3]
+    assert_equal @movie_5, movies[4]
+    assert_equal @movie_4, movies[5]
+  end
+
+  def test_scope_flops
+    setup_movies
+
+    movies = Movie.flops
+    assert_equal 3, movies.size
+    assert_equal @movie_3, movies[0]
+    assert_equal @movie_2, movies[1]
+    assert_equal @movie_4, movies[2]
+  end
+
+  def test_scope_hits
+    setup_movies
+
+    movies = Movie.hits
+    assert_equal 3, movies.size
+    assert_equal @movie_6, movies[0]
+    assert_equal @movie_1, movies[1]
+    assert_equal @movie_5, movies[2]
+  end
+
+  def test_scope_upcoming
+    setup_movies
+
+    movies = Movie.upcoming
+    assert_equal 3, movies.size
+    assert_equal @movie_8, movies[0]
+    assert_equal @movie_9, movies[1]
+    assert_equal @movie_7, movies[2]
+  end
+
+  def test_scope_rated
+    setup_movies
+
+    movies = Movie.rated('PG-13')
+    assert_equal 3, movies.size
+    assert_equal @movie_1, movies[0]
+    assert_equal @movie_5, movies[1]
+    assert_equal @movie_4, movies[2]
+  end
+
+  def test_scope_recent
+    setup_movies
+
+    movies = Movie.recent(6)
+    assert_equal 6, movies.size
+
+    assert_equal @movie_3, movies[0]
+    assert_equal @movie_6, movies[1]
+    assert_equal @movie_2, movies[2]
+    assert_equal @movie_1, movies[3]
+    assert_equal @movie_5, movies[4]
+    assert_equal @movie_4, movies[5]
+  end
+
+  private
+  def setup_movies
+    @movie_1 = Movie.create_exemplar!(:total_gross => 300000000, :released_on => Date.today << 12, :rating => 'PG-13')
+    @movie_2 = Movie.create_exemplar!(:total_gross => 30000, :released_on => Date.today << 10, :rating => 'G')
+    @movie_3 = Movie.create_exemplar!(:total_gross => 7000000, :released_on => Date.today << 1, :rating => 'PG')
+    @movie_4 = Movie.create_exemplar!(:total_gross => 600000, :released_on => Date.today << 19, :rating => 'PG-13')
+    @movie_5 = Movie.create_exemplar!(:total_gross => 3000900000, :released_on => Date.today << 14, :rating => 'PG-13')
+    @movie_6 = Movie.create_exemplar!(:total_gross => 4000000009, :released_on => Date.today << 9, :rating => 'R')
+    @movie_7 = Movie.create_exemplar!(:total_gross => 900090000, :released_on => Date.today >> 19)
+    @movie_8 = Movie.create_exemplar!(:total_gross => 900090000, :released_on => Date.today >> 8)
+    @movie_9 = Movie.create_exemplar!(:total_gross => 900090000, :released_on => Date.today >> 10)
   end
 end
