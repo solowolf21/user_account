@@ -1,7 +1,8 @@
 class Movie < ActiveRecord::Base
   RATINGS = %w(G PG PG-13 R NC-17)
 
-  validates :title, :released_on, :duration, :presence => true
+  validates :title, :slug, :released_on, :duration, :presence => true
+  validates :title, :slug, :uniqueness => true
   validates :description, :length => {:minimum => 25}
   validates :total_gross, :numericality => {:greater_than_or_equal_to => 0}
   validates :image_file_name, :allow_blank => true, :format => {
@@ -15,6 +16,8 @@ class Movie < ActiveRecord::Base
   has_many :likers, :through => :likes, :source => :user
   has_many :characterizations, :dependent => :destroy
   has_many :genres, :through => :characterizations
+
+  before_validation :generate_slug
 
   scope :released, -> { where('released_on < ?', Date.today).order('released_on desc') }
   scope :flops, -> { released.where('total_gross < ?', 50000000).order('total_gross asc') }
@@ -33,5 +36,13 @@ class Movie < ActiveRecord::Base
 
   def average_stars
     reviews.average(:stars)
+  end
+
+  def to_param
+    slug
+  end
+
+  def generate_slug
+    self.slug ||= title.parameterize if title
   end
 end

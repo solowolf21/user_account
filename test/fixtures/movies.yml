@@ -9,6 +9,7 @@ Iron Man:
   director:  Jon Favreau
   duration:  126 min
   image_file_name:  ironman.jpg
+  slug: iron-man
 Superman:
   id: 2
   title:  Superman
@@ -20,6 +21,7 @@ Superman:
   director:  Richard Donner
   duration:  143 min
   image_file_name:  superman.jpg
+  slug: superman
 Spider-Man:
   id: 3
   title:  Spider-Man
@@ -31,6 +33,7 @@ Spider-Man:
   director:  Sam Raimi
   duration:  121 min
   image_file_name:  spiderman.jpg
+  slug: spider-man
 Batman:
   id: 4
   title:  Batman vs. Godzilla
@@ -42,6 +45,7 @@ Batman:
   director:  Ishiro Honda
   duration:  211 min
   image_file_name:  batman-vs-godzilla.jpg
+  slug: batman-vs-godzilla
 Catwoman:
   id: 5
   title:  Catwoman
@@ -53,3 +57,4 @@ Catwoman:
   director:  Jean-Christophe 'Pitof' Comar
   duration:  101 min
   image_file_name:  catwoman.jpg
+  slug: catwoman

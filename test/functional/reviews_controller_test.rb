@@ -11,7 +11,7 @@ class ReviewsControllerTest < ActionController::TestCase
     @review_2 = Review.create_exemplar!(:movie => @movie)
     @review_3 = Review.create_exemplar!(:movie => @movie)
 
-    get :index, :movie_id => @movie.id
+    get :index, :movie_id => @movie.slug
     assert_response :success
 
     @reviews = assigns(:reviews)
@@ -27,7 +27,7 @@ class ReviewsControllerTest < ActionController::TestCase
     @review_2 = Review.create_exemplar!(:movie => @movie)
     @review_3 = Review.create_exemplar!(:movie => @movie)
 
-    get :index, :movie_id => @movie.id
+    get :index, :movie_id => @movie.slug
     assert_equal 'Please Sign In First!', flash[:alert]
     assert_redirected_to new_session_path
   end
@@ -35,14 +35,14 @@ class ReviewsControllerTest < ActionController::TestCase
   def test_new
     user_signin
     assert_no_difference ('Review.count') do
-      get :new, :movie_id => @movie.id
+      get :new, :movie_id => @movie.slug
       assert_response :success
     end
   end
 
   def test_new__without_signin
     assert_no_difference ('Review.count') do
-      get :new, :movie_id => @movie.id
+      get :new, :movie_id => @movie.slug
       assert_equal 'Please Sign In First!', flash[:alert]
       assert_redirected_to new_session_path
     end
@@ -71,7 +71,7 @@ class ReviewsControllerTest < ActionController::TestCase
 
   def params
     {
-        :movie_id => @movie.id,
+        :movie_id => @movie.slug,
         :review   => {
             :stars   => '5',
             :comment => 'Awesome!'

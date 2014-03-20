@@ -6,7 +6,7 @@ class LikesControllerTest < ActionController::TestCase
   def test_create_with_signin
     sign_in_user
     assert_difference ('Like.count') do
-      post :create, :movie_id => @movie.id
+      post :create, :movie_id => @movie.slug
     end
 
     @user.reload
@@ -16,7 +16,7 @@ class LikesControllerTest < ActionController::TestCase
 
   def test_create_without_signin
     assert_no_difference ('Like.count') do
-      post :create, :movie_id => @movie.id
+      post :create, :movie_id => @movie.slug
     end
 
     assert_redirected_to new_session_path
@@ -32,7 +32,7 @@ class LikesControllerTest < ActionController::TestCase
     assert_equal @movie, @user.liked_movies.first
 
     assert_difference ('Like.count'), -1 do
-      delete :destroy, :movie_id => @movie.id, :id => @user.likes.first.id
+      delete :destroy, :movie_id => @movie.slug, :id => @user.likes.first.id
     end
     @user.reload
     assert_equal 0, @user.liked_movies.size
@@ -42,7 +42,7 @@ class LikesControllerTest < ActionController::TestCase
   def test_destroy_without_signin
     @user = User.create_exemplar!(:liked_movies => [@movie])
     assert_no_difference ('Like.count') do
-      delete :destroy, :movie_id => @movie.id, :id => @user.likes.first.id
+      delete :destroy, :movie_id => @movie.slug, :id => @user.likes.first.id
     end
 
     assert_redirected_to new_session_path

@@ -1,6 +1,7 @@
 class MoviesController < ApplicationController
   before_action :require_signin, :except => [:index, :show]
   before_action :require_admin, :except => [:index, :show]
+  before_action :set_movie, :only => [:show, :edit, :update, :destroy]
 
   def index
     case params[:scope]
@@ -14,21 +15,18 @@ class MoviesController < ApplicationController
   end
 
   def show
-    @movie = Movie.find(params[:id])
     @likers = @movie.likers
     @genres = @movie.genres
 
     if find_current_user
-      @current_like = find_current_user.likes.find_by(:movie_id => params[:id])
+      @current_like = find_current_user.likes.find_by(:movie_id => @movie.id)
     end
   end
 
   def edit
-    @movie = Movie.find(params[:id])
   end
 
   def update
-    @movie = Movie.find(params[:id])
     if @movie.update_attributes(movie_params)
       flash[:notice] = 'Movie successfully updated!'
       redirect_to @movie
@@ -52,7 +50,6 @@ class MoviesController < ApplicationController
   end
 
   def destroy
-    @movie = Movie.find(params[:id])
     @movie.destroy
     redirect_to movies_path, :alert => 'Movie successfully destroyed!'
   end
@@ -62,4 +59,7 @@ private
     params.require(:movie).permit(:title, :description, :rating, :released_on, :total_gross, :cast, :director, :duration, :image_file_name, genre_ids:[])
   end
 
+  def set_movie
+    @movie = Movie.find_by!(:slug => params[:id])
+  end
 end
