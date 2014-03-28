@@ -4,12 +4,6 @@ class MoviesControllerTest < ActionController::TestCase
 
   def setup
     @movie_1 = Movie.create_exemplar!(
-        :title           => 'Superman',
-        :rating          => 'PG-13',
-        :total_gross     => '1234124312349.99',
-        :description     => 'This man is super cool! This man is super cool! This man is super cool! This man is super cool!',
-        :released_on     => '2013-11-19',
-        :duration        => '150min',
         :title           => "Iron Man",
         :rating          => "PG-13",
         :total_gross     => 318412101.00,
@@ -22,13 +16,6 @@ class MoviesControllerTest < ActionController::TestCase
     )
 
     @movie_2 = Movie.create_exemplar!(
-        :title           => 'Iron man',
-        :rating          => 'NC-17',
-        :total_gross     => '898124312349.99',
-        :description     => 'Iron man is super awesome! Iron man is super awesome! Iron man is super awesome! Iron man is super awesome!',
-        :released_on     => '2011-01-29',
-        :duration        => '120min',
-        :title           => "Superman",
         :rating          => "PG",
         :total_gross     => 134218018.00,
         :description     => "Clark Kent grows up to be the greatest super-hero",
@@ -39,12 +26,6 @@ class MoviesControllerTest < ActionController::TestCase
         :image_file_name => "superman.jpg"
     )
     @movie_3 = Movie.create_exemplar!(
-        :title           => 'Spiderman',
-        :rating          => 'PG',
-        :total_gross     => '123419.99',
-        :description     => 'Spider man is a dumb! Spider man is a dumb! Spider man is a dumb! Spider man is a dumb!',
-        :released_on     => '2009-10-13',
-        :duration        => '140min',
         :title           => "Spider-Man",
         :rating          => "PG-13",
         :total_gross     => 40376375.00,
@@ -60,6 +41,34 @@ class MoviesControllerTest < ActionController::TestCase
   def test_index
     movie = Movie.create_exemplar!(:released_on => Date.today >> 1)
     get :index
+    assert_response :success
+    assert_equal 3, assigns(:movies).size
+    assert_equal @movie_1, assigns(:movies)[0]
+    assert_equal @movie_3, assigns(:movies)[1]
+    assert_equal @movie_2, assigns(:movies)[2]
+  end
+
+  def test_index__flops
+    movie = Movie.create_exemplar!(:total_gross => 5000000)
+    get :index, :scope => :flops
+    assert_response :success
+    assert_equal 2, assigns(:movies).size
+    assert_equal movie, assigns(:movies)[0]
+    assert_equal @movie_3, assigns(:movies)[1]
+  end
+
+  def test_index__hits
+    movie = Movie.create_exemplar!(:total_gross => 300000002, :released_on => '2008-09-03')
+    get :index, :scope => :hits
+    assert_response :success
+    assert_equal 2, assigns(:movies).size
+    assert_equal movie, assigns(:movies)[0]
+    assert_equal @movie_1, assigns(:movies)[1]
+  end
+
+  def test_index__blah
+    movie = Movie.create_exemplar!(:released_on => Date.today >> 1)
+    get :index, :scope => :blah
     assert_response :success
     assert_equal 3, assigns(:movies).size
     assert_equal @movie_1, assigns(:movies)[0]
