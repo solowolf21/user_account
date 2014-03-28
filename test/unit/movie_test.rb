@@ -38,6 +38,7 @@ class MovieTest < ActiveSupport::TestCase
     assert_equal 'Mike Bay',           movie.director
     assert_equal '2h30min',            movie.duration
     assert_equal 'transformer.jpg',    movie.image_file_name
+    assert_equal 'movie698481name',    movie.slug
   end
 
   def test_validations
@@ -163,6 +164,11 @@ class MovieTest < ActiveSupport::TestCase
     assert_equal @movie_1, movies[3]
     assert_equal @movie_5, movies[4]
     assert_equal @movie_4, movies[5]
+  end
+
+  def test_to_params
+    movie = Movie.create_exemplar!(:title => 'Awesome')
+    assert_equal 'awesome', movie.slug
   end
 
   private

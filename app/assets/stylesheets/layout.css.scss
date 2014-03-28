@@ -40,45 +40,20 @@ footer#page-footer {
       background-color: #d6e6e6;
       border-radius: 5px;
       padding: 10px 10px;
+      width: 25%;
+      overflow: hidden;
     }
   }
 
-  .input .string > label {
-    font-size: larger;
-  }
-
-  .input {
+  .input input {
     padding: 7px;
-    .string {
-      width: 25em;
-      height: 2em;
-      font-size: 16px;
-      border-radius: 5px;
-    }
-
-    .text {
-      width: 25em;
-      font-size: 16px;
-      border-radius: 5px;
-    }
-
-    .select {
-      width: 10em;
-      font-size: 16px;
-      border-radius: 5px;
-    }
-
-    .text, .integer {
-      width: 25em;
-      font-size: 16px;
-      border-radius: 5px;
-    }
-
-    .date {
-      font-size: 16px;
-      border-radius: 5px;
-    }
+    width: 20em;
   }
+
+  .input .check_boxes {
+    width: 1em;
+  }
+
   .page-sidebar {
     vertical-align: text-top;
     background: #F0F0F0;
@@ -103,5 +78,11 @@ footer#page-footer {
     padding: 0.5em;
     background-color: #ffe8e0;
     color: red;
+  }
+}
+
+.page-sidebar {
+  li {
+    margin-top: 5px;
   }
 }
