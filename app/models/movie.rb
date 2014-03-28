@@ -16,12 +16,19 @@ class Movie < ActiveRecord::Base
   has_many :characterizations, :dependent => :destroy
   has_many :genres, :through => :characterizations
 
+  scope :released, -> { where('released_on < ?', Date.today).order('released_on desc') }
+  scope :flops, -> { released.where('total_gross < ?', 50000000).order('total_gross asc') }
+  scope :hits, -> { released.where('total_gross >= ?', 300000000).order('total_gross desc') }
+  scope :upcoming, -> { where('released_on > ?', Date.today).order('released_on asc') }
+  scope :rated, -> (rating) { released.where(:rating => rating) }
+  scope :recent, -> (max=5) { released.limit(max) }
+
   def flop?
     self.total_gross < 50000000
   end
 
-  def self.released
-    Movie.where('released_on < ?', Date.today).order('released_on desc')
+  def hit?
+    self.total_gross >= 300000000
   end
 
   def average_stars
