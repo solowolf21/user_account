@@ -77,7 +77,7 @@ class MoviesControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, :id => @movie_1.id
+    get :show, :id => @movie_1.slug
     assert_response :success
     assert_equal @movie_1, assigns(:movie)
     assert_empty assigns(:likers)
@@ -89,7 +89,7 @@ class MoviesControllerTest < ActionController::TestCase
     @movie = Movie.create_exemplar!.with_likers_exemplar
     @movie.genres = genres
     @movie.save!
-    get :show, :id => @movie.id
+    get :show, :id => @movie.slug
     assert_response :success
     assert_equal @movie, assigns(:movie)
     assert_equal 3, assigns(:likers).size
@@ -101,7 +101,7 @@ class MoviesControllerTest < ActionController::TestCase
     session[:user_id] = @user.id
     @movie = Movie.create_exemplar!(:likers => [@user]).with_likers_exemplar
 
-    get :show, :id => @movie.id
+    get :show, :id => @movie.slug
 
     assert_response :success
     assert_equal @movie, assigns(:movie)
@@ -114,7 +114,7 @@ class MoviesControllerTest < ActionController::TestCase
     session[:user_id] = @user.id
     @movie            = Movie.create_exemplar!(:likers => [User.create_exemplar!]).with_likers_exemplar
 
-    get :show, :id => @movie.id
+    get :show, :id => @movie.slug
 
     assert_response :success
     assert_equal @movie, assigns(:movie)
@@ -124,7 +124,7 @@ class MoviesControllerTest < ActionController::TestCase
 
   def test_edit__without_signed_in
     assert_no_difference ('Movie.count') do
-      get :edit, :id => @movie_1.id
+      get :edit, :id => @movie_1.slug
     end
 
     assert_redirected_to new_session_path
@@ -134,7 +134,7 @@ class MoviesControllerTest < ActionController::TestCase
   def test_edit__with_non_admin_user
     user_signed_in
     assert_no_difference ('Movie.count') do
-      get :edit, :id => @movie_1.id
+      get :edit, :id => @movie_1.slug
     end
     assert_redirected_to root_url
     assert_equal 'You are not authorized!', flash[:alert]
@@ -143,7 +143,7 @@ class MoviesControllerTest < ActionController::TestCase
   def test_edit__with_admin_user
     user_signed_in(true)
     assert_no_difference ('Movie.count') do
-      get :edit, :id => @movie_1.id
+      get :edit, :id => @movie_1.slug
     end
 
     assert_response :success
@@ -162,7 +162,7 @@ class MoviesControllerTest < ActionController::TestCase
 
   def test_update__without_signed_in
     assert_no_difference ('Movie.count') do
-      put :update, params.merge(:id => @movie_1.id)
+      put :update, params.merge(:id => @movie_1.slug)
     end
     assert_redirected_to new_session_path
     assert_equal 'Please Sign In First!', flash[:alert]
@@ -171,7 +171,7 @@ class MoviesControllerTest < ActionController::TestCase
   def test_update__with_non_admin_user
     user_signed_in
     assert_no_difference ('Movie.count') do
-      put :update, params.merge(:id => @movie_1.id)
+      put :update, params.merge(:id => @movie_1.slug)
     end
     assert_redirected_to root_url
     assert_equal 'You are not authorized!', flash[:alert]
@@ -180,7 +180,7 @@ class MoviesControllerTest < ActionController::TestCase
   def test_update__with_admin_user
     user_signed_in(true)
     assert_no_difference ('Movie.count') do
-      put :update, params.merge(:id => @movie_1.id)
+      put :update, params.merge(:id => @movie_1.slug)
       assert_redirected_to @movie_1
     end
 
@@ -265,7 +265,7 @@ class MoviesControllerTest < ActionController::TestCase
 
   def test_destroy__without_signed_in
     assert_no_difference ('Movie.count') do
-      delete :destroy, :id => @movie_1.id
+      delete :destroy, :id => @movie_1.slug
     end
     assert_redirected_to new_session_path
     assert_equal 'Please Sign In First!', flash[:alert]
@@ -274,7 +274,7 @@ class MoviesControllerTest < ActionController::TestCase
   def test_destroy__with_non_admin_user
     user_signed_in(false)
     assert_no_difference ('Movie.count') do
-      delete :destroy, :id => @movie_1.id
+      delete :destroy, :id => @movie_1.slug
     end
     assert_redirected_to root_url
     assert_equal 'You are not authorized!', flash[:alert]
@@ -283,7 +283,7 @@ class MoviesControllerTest < ActionController::TestCase
   def test_destroy__with_admin_user
     user_signed_in(true)
     assert_difference ('Movie.count'), -1 do
-      delete :destroy, :id => @movie_1.id
+      delete :destroy, :id => @movie_1.slug
     end
     assert_redirected_to movies_path
     assert_equal 'Movie successfully destroyed!', flash[:alert]
