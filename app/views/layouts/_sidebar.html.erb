@@ -14,5 +14,8 @@
         <%= link_to 'Add New Movie', new_movie_path %>
       </li>
     <% end %>
+    <div style="margin-top: 1em">
+      <%= content_for :side %>
+    </div>
   </ul>
 </nav>
