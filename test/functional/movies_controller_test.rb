@@ -71,14 +71,20 @@ class MoviesControllerTest < ActionController::TestCase
     get :show, :id => @movie_1.id
     assert_response :success
     assert_equal @movie_1, assigns(:movie)
+    assert_empty assigns(:likers)
+    assert_empty assigns(:genres)
   end
 
-  def test_show__with_likers
+  def test_show__with_likers_and_genres
+    genres = setup_genres
     @movie = Movie.create_exemplar!.with_likers_exemplar
+    @movie.genres = genres
+    @movie.save!
     get :show, :id => @movie.id
     assert_response :success
     assert_equal @movie, assigns(:movie)
     assert_equal 3, assigns(:likers).size
+    assert_equal genres, assigns(:genres)
   end
 
   def test_show__with_likers_contain_current_user
@@ -181,6 +187,7 @@ class MoviesControllerTest < ActionController::TestCase
     assert_equal 'Mike Bay', @movie_1.director
     assert_equal '100min', @movie_1.duration
     assert_equal 'transformer.jpg', @movie_1.image_file_name
+    assert_equal 3, @movie_1.genres.size
   end
 
   def test_new__without_signed_in
@@ -241,6 +248,7 @@ class MoviesControllerTest < ActionController::TestCase
     assert_equal 'Mike Bay', assigns(:movie).director
     assert_equal '100min', assigns(:movie).duration
     assert_equal 'transformer.jpg', assigns(:movie).image_file_name
+    assert_equal 3, assigns(:movie).genres.size
 
     assert_redirected_to assigns(:movie)
     assert_equal 'Movie successfully created!', flash[:notice]
@@ -274,6 +282,11 @@ class MoviesControllerTest < ActionController::TestCase
 
   private
   def params
+    genre_ids = []
+    setup_genres.each do |g|
+      genre_ids << g.id
+    end
+
     {:movie => {
         :title           => 'Donut',
         :rating          => 'PG-13',
@@ -283,12 +296,20 @@ class MoviesControllerTest < ActionController::TestCase
         :cast            => 'Tom',
         :director        => 'Mike Bay',
         :duration        => '100min',
-        :image_file_name => 'transformer.jpg'
+        :image_file_name => 'transformer.jpg',
+        :genre_ids       => genre_ids
     }}
   end
 
   def user_signed_in(admin=false)
     @user             = admin ? User.create_exemplar!.admin_exemplar : User.create_exemplar!
     session[:user_id] = @user.id
+  end
+
+  def setup_genres
+    g1 = Genre.create_exemplar!(:name => 'Action')
+    g2 = Genre.create_exemplar!(:name => 'Comedy')
+    g3 = Genre.create_exemplar!(:name => 'Sci')
+    [g1, g2, g3]
   end
 end

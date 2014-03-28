@@ -35,6 +35,14 @@
       <th>Duration:</th>
       <td><%= @movie.duration %></td>
     </tr>
+    <tr>
+      <th>Genres:</th>
+      <td>
+        <% @genres.each do |g| %>
+        <li><%= g.name %></li>
+        <% end %>
+      </td>
+    </tr>
   </table>
   <div style="margin-left: 15px">
     <% if current_user_admin? %>

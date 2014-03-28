@@ -43,4 +43,8 @@ class Exemplars
       obj.liked_movies << Movie.create_exemplar!
     end
   end
+
+  exemplify Genre do |obj, count, overrides|
+    obj.name = overrides.delete(:name) || "Genre_#{count}"
+  end
 end
