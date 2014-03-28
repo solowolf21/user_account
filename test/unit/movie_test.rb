@@ -97,4 +97,10 @@ class MovieTest < ActiveSupport::TestCase
 
     assert_equal 2, @movie.average_stars
   end
+
+  def test_likers
+    @movie = Movie.create_exemplar!.with_likers_exemplar
+    assert_equal 3, @movie.likes.size
+    assert_equal 3, @movie.likers.size
+  end
 end

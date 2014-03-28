@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140306043512) do
+ActiveRecord::Schema.define(version: 20140307052406) do
+
+  create_table "likes", force: true do |t|
+    t.integer  "movie_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "likes", ["movie_id"], name: "index_likes_on_movie_id", using: :btree
+  add_index "likes", ["user_id"], name: "index_likes_on_user_id", using: :btree
 
   create_table "movies", force: true do |t|
     t.string   "title"
@@ -28,7 +38,6 @@ ActiveRecord::Schema.define(version: 20140306043512) do
   end
 
   create_table "reviews", force: true do |t|
-    t.string   "name"
     t.integer  "stars"
     t.text     "comment"
     t.integer  "movie_id"
