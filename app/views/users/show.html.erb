@@ -5,4 +5,15 @@
     <%= link_to 'Edit', edit_user_path(@user) %> |
     <%= link_to 'Delete', @user, :method => :delete, :data => {:confirm => 'Are you sure?'} %>
   <% end %>
+  <hr>
+  <% if @user.reviews.any? %>
+    <h3>Reviews</h3>
+    <% @user.reviews.each do |review| %>
+      <li>
+        <span><%= pluralize(review.stars, 'star') %></span>
+        <span>for <%= link_to review.movie.title, review.movie %></span>
+        <span>&#40;<%= time_ago_in_words(review.created_at) %> ago&#41;</span>
+      </li>
+    <% end %>
+  <% end %>
 </article>

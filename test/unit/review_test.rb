@@ -5,7 +5,6 @@ class ReviewTest < ActiveSupport::TestCase
     review = Review.create_exemplar!
     movie = Movie.create_exemplar!
 
-    review.name = 'Jim'
     review.stars = 5
     review.comment = 'What a good movie!'
     review.movie = movie
@@ -14,7 +13,6 @@ class ReviewTest < ActiveSupport::TestCase
 
     review.reload
 
-    assert_equal 'Jim', review.name
     assert_equal 5, review.stars
     assert_equal 'What a good movie!', review.comment
     assert_equal movie, review.movie
@@ -27,11 +25,9 @@ class ReviewTest < ActiveSupport::TestCase
       review.save
     end
 
-    assert_equal ["can't be blank"], review.errors[:name]
     assert_equal ["can't be blank", "must be between 1 and 5"], review.errors[:stars]
     assert_equal ["can't be blank", "is too short (minimum is 4 characters)"], review.errors[:comment]
 
-    review.name = 'Jim'
     review.stars = 5
     review.comment = 'What a good movie!'
     review.movie = Movie.create_exemplar!
