@@ -2,7 +2,7 @@
 <html>
 <head>
   <title><%= page_title %></title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
@@ -23,14 +23,8 @@
   </div>
 <% end %>
 
-<table class='big-panel'>
-  <td class="main-panel">
-    <%= yield %>
-  </td>
-  <td class="page-sidebar">
-    <%= render 'layouts/sidebar' %>
-  </td>
-</table>
+<%= yield %>
+<%= render 'layouts/sidebar' %>
 <%= render 'layouts/footer' %>
 </body>
 </html>

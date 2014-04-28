@@ -1,18 +1,10 @@
-<table class="page-header">
-  <tr>
-    <td class="title-part">
-      <h1>AppFolio Movies</h1>
-    </td>
-    <td class='session-info'>
-      <nav>
-        <% if @current_user ||= find_current_user %>
-          <%= link_to @current_user.name, @current_user %> |
-          <%= link_to 'Sign Out', session_path, :method => :delete %>
-        <% else %>
-          <li><%= link_to 'Sign Up', signup_path %></li>
-          <li><%= link_to 'Sign In', new_session_path %></li>
-        <% end %>
-      </nav>
-    </td>
-  </tr>
-</table>
+<h1>AppFolio Movies</h1>
+<nav>
+  <% if @current_user ||= find_current_user %>
+    <%= link_to @current_user.name, @current_user %> |
+    <%= link_to 'Sign Out', session_path, :method => :delete %>
+  <% else %>
+    <li><%= link_to 'Sign Up', signup_path %></li>
+    <li><%= link_to 'Sign In', new_session_path %></li>
+  <% end %>
+</nav>

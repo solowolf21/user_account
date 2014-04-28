@@ -1,4 +1,4 @@
-<article class="movie">
+<article>
   <h2><%= @user.name %></h2>
   <h3><%= @user.email %></h3>
   <% if current_user?(@user) || find_current_user.admin? %>
